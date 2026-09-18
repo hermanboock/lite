@@ -200,6 +200,67 @@
     border-top:1px solid var(--border);padding-top:18px;
   }
 
+  /* ---------- Stats bar ---------- */
+  .stats{
+    display:grid;grid-template-columns:repeat(5,1fr);
+    background:var(--surface);border:1px solid var(--border);border-radius:16px;
+    box-shadow:var(--shadow-1);margin:0 0 34px;
+  }
+  .stat{
+    position:relative;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+    padding:24px 16px;text-align:center;border-left:1px solid var(--border);
+  }
+  .stat:first-child{border-left:none}
+  .stat-num{
+    display:flex;align-items:center;justify-content:center;min-height:34px;
+    font-size:29px;font-weight:700;letter-spacing:-.5px;color:rgb(var(--green-ink));line-height:1;
+  }
+  .soon{
+    font-size:12px;font-weight:600;line-height:1.4;white-space:nowrap;
+    background:#e3f2fd;color:#1565c0;border:1px solid #cfe3fb;padding:5px 11px;border-radius:999px;
+  }
+  .stat-label{
+    display:block;min-height:2.7em;
+    font-size:12.5px;font-weight:500;color:var(--muted-strong);line-height:1.35;max-width:16ch;
+  }
+  .info{
+    display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;
+    width:15px;height:15px;margin-left:5px;padding:0;border:none;background:none;color:var(--muted);
+    cursor:help;border-radius:50%;transform:translateY(-1px);
+  }
+  .info svg{width:15px;height:15px;stroke-width:2}
+  .info:hover,.info:focus-visible{color:rgb(var(--green-ink))}
+  .info:focus-visible{outline:2px solid rgb(var(--green-btn));outline-offset:2px}
+  .tip-bubble{
+    position:absolute;left:50%;bottom:100%;transform:translateX(-50%) translateY(-4px);
+    width:max-content;max-width:min(240px,78vw);
+    background:rgb(var(--navy));color:#fff;text-align:left;
+    font-size:12px;font-weight:400;line-height:1.45;
+    padding:10px 12px;border-radius:10px;box-shadow:0 12px 28px -10px rgba(var(--navy),.55);
+    opacity:0;visibility:hidden;transition:opacity .15s ease,transform .15s ease;
+    z-index:20;pointer-events:none;
+  }
+  .tip-bubble::after{
+    content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);
+    border:6px solid transparent;border-top-color:rgb(var(--navy));
+  }
+  .stat:has(.info:hover) .tip-bubble,
+  .stat:has(.info:focus-visible) .tip-bubble,
+  .stat:has(.info:focus) .tip-bubble{
+    opacity:1;visibility:visible;transform:translateX(-50%) translateY(-8px);
+  }
+  @media (prefers-reduced-motion: reduce){ .tip-bubble{transition:none} }
+  @media (max-width:760px){
+    .stats{grid-template-columns:1fr}
+    .stat{flex-direction:row-reverse;justify-content:space-between;align-items:center;text-align:left;
+      border-left:none;border-top:1px solid var(--border);padding:15px 18px;gap:14px}
+    .stat:first-child{border-top:none}
+    .stat-num{font-size:22px;min-height:0}
+    .stat-label{font-size:13.5px;max-width:none;min-height:0}
+    .tip-bubble{max-width:min(260px,82vw)}
+  }
+
   /* ---------- Recruitment-help modal ---------- */
   .chip-round{border-radius:50%}
   .modal-scrim{
@@ -460,6 +521,32 @@
         </div>
 
         <p class="panel-foot">You can start at any stage.</p>
+      </section>
+
+      <!-- Stats bar -->
+      <section class="stats" aria-label="Your hiring activity">
+        <div class="stat">
+          <span class="stat-num" data-stat="assessments">5</span>
+          <span class="stat-label">Assessments administered<button type="button" class="info" aria-label="About assessments administered" aria-describedby="tip-assessments"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11.5v4.5"/><circle cx="12" cy="8" r="1" fill="currentColor" stroke="none"/></svg></button></span>
+          <span class="tip-bubble" id="tip-assessments" role="tooltip">Number of assessments successfully administered. This counts as assessments you were charged for, whether or not a result was produced</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num" data-stat="checks">3</span>
+          <span class="stat-label">Checks administered<button type="button" class="info" aria-label="About checks administered" aria-describedby="tip-checks"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11.5v4.5"/><circle cx="12" cy="8" r="1" fill="currentColor" stroke="none"/></svg></button></span>
+          <span class="tip-bubble" id="tip-checks" role="tooltip">Number of checks successfully completed with a result returned. These are the checks you were charged for.</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num" data-stat="cvs"><span class="soon">Coming Soon</span></span>
+          <span class="stat-label">Digital CVs collected</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num" data-stat="active-jobs">1</span>
+          <span class="stat-label">Active jobs</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num" data-stat="applications">458</span>
+          <span class="stat-label">Applications processed</span>
+        </div>
       </section>
     </div>
   </div>
