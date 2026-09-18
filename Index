@@ -1,0 +1,682 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JOBJACK Lite — Home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* JOBJACK shipped product UI tokens (RGB triples, per design system) */
+    --navy: 10,33,57;          /* #0a2139 */
+    --navy-deep: 11,30,50;     /* #0b1e32 */
+    --green: 89,179,103;       /* #59b367 */
+    --green-btn: 48,136,67;    /* #308843 */
+    --green-ink: 30,110,52;    /* text-safe green */
+    --yellow: 255,218,79;      /* #ffda4f */
+    --teal: 0,83,76;           /* header band */
+    --surface: #ffffff;
+    --surface-2: #fcfcff;
+    --page: #eef1ea;
+    --border: #e4e7e1;
+    --muted: #7d8794;
+    --muted-strong: #55606d;
+
+    --radius: 14px;
+    --radius-sm: 9px;
+    --shadow-1: 0 1px 2px rgba(var(--navy),.05), 0 1px 3px rgba(var(--navy),.04);
+    --shadow-2: 0 10px 24px -12px rgba(var(--navy),.22), 0 2px 6px rgba(var(--navy),.06);
+    --ff: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    --sidebar-w: 250px;
+  }
+
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:var(--ff);
+    color:rgb(var(--navy));
+    background:var(--page);
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    min-height:100vh;
+  }
+  a{color:inherit;text-decoration:none}
+  button{font-family:inherit}
+
+  .app{display:flex;min-height:100vh}
+
+  /* ---------- Sidebar ---------- */
+  .sidebar{
+    width:var(--sidebar-w);
+    flex:0 0 var(--sidebar-w);
+    background:rgb(var(--navy-deep));
+    color:#eaf0f6;
+    display:flex;flex-direction:column;
+    position:sticky;top:0;height:100vh;
+    z-index:40;
+  }
+  .brand{
+    height:120px;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg, rgba(var(--teal),1) 0%, rgba(var(--green),.9) 120%);
+  }
+  .brand .mark{
+    width:74px;height:74px;border-radius:50%;background:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:700;font-size:30px;letter-spacing:-1px;color:rgb(var(--green-ink));
+    box-shadow:0 6px 18px rgba(0,0,0,.18);
+  }
+  .brand .mark span{transform:translateX(-2px)}
+  .nav{padding:14px 12px;display:flex;flex-direction:column;gap:2px;flex:1;overflow-y:auto}
+  .nav-item{
+    display:flex;align-items:center;gap:13px;
+    padding:11px 14px;border-radius:10px;
+    font-size:14.5px;font-weight:500;color:#c3cddb;
+    cursor:pointer;border:none;background:none;width:100%;text-align:left;
+    transition:background .15s ease,color .15s ease;
+  }
+  .nav-item svg{width:19px;height:19px;flex:0 0 19px;stroke-width:1.9}
+  .nav-item .chev{margin-left:auto;width:15px;height:15px;transition:transform .2s ease;opacity:.75}
+  .nav-item:hover{background:rgba(255,255,255,.06);color:#fff}
+  .nav-item.active{background:rgb(var(--green));color:#06301a;font-weight:700}
+  .nav-item.active svg{stroke:#06301a}
+  .nav-item:focus-visible{outline:2px solid rgb(var(--yellow));outline-offset:2px}
+  .subnav{display:flex;flex-direction:column;gap:1px;padding:2px 0 4px 0;overflow:hidden}
+  .subnav a{
+    padding:9px 14px 9px 46px;font-size:13.5px;color:#aab6c6;border-radius:8px;
+  }
+  .subnav a:hover{background:rgba(255,255,255,.06);color:#fff}
+  .nav-item[aria-expanded="false"] .chev{transform:rotate(180deg)}
+  .legal{
+    padding:14px 22px;font-size:12px;color:#67788c;border-top:1px solid rgba(255,255,255,.06);
+  }
+  .legal b{color:#9fb0c2;font-weight:500}
+
+  /* ---------- Content ---------- */
+  .content{flex:1;min-width:0;display:flex;flex-direction:column}
+  .band{
+    height:150px;
+    background:
+      radial-gradient(120% 180% at 88% -40%, rgba(var(--green),.55), transparent 60%),
+      radial-gradient(90% 160% at 6% -30%, rgba(var(--navy),.35), transparent 55%),
+      linear-gradient(115deg, rgb(var(--teal)) 0%, rgba(var(--teal),.86) 42%, rgba(var(--green),.72) 100%);
+    position:relative;
+  }
+  .band .dot{position:absolute;width:22px;height:22px;border-radius:50%;background:rgb(var(--yellow));top:34px;right:16%;box-shadow:0 0 0 8px rgba(var(--yellow),.16)}
+  .wrap{width:100%;max-width:1180px;margin:0 auto;padding:0 30px}
+  .greet-row{
+    margin-top:-104px;position:relative;z-index:2;
+    display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap;
+    padding-bottom:18px;
+  }
+  .greet h1{margin:0;font-size:30px;line-height:1.15;font-weight:700;color:#fff;letter-spacing:-.4px}
+  .greet p{margin:6px 0 0;font-size:15px;color:rgba(255,255,255,.86)}
+  .head-actions{display:flex;align-items:center;gap:10px;padding-top:6px}
+  .credits{
+    background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);color:#fff;
+    padding:9px 15px;border-radius:10px;font-size:14px;font-weight:500;backdrop-filter:blur(2px);
+  }
+  .credits b{font-weight:700;margin-left:4px}
+  .btn{
+    border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;
+    padding:10px 17px;transition:transform .12s ease, background .15s ease, box-shadow .15s ease, border-color .15s ease;
+    display:inline-flex;align-items:center;gap:8px;line-height:1;
+  }
+  .btn:active{transform:translateY(1px)}
+  .btn:focus-visible{outline:2px solid rgb(var(--green-btn));outline-offset:2px}
+  .btn-ghost-light{background:#fff;color:rgb(var(--green-ink));border:1px solid rgba(255,255,255,.7)}
+  .btn-ghost-light:hover{background:#f3fff6}
+  .btn-primary{background:rgb(var(--green-btn));color:#fff;border:1px solid rgb(var(--green-btn));box-shadow:0 6px 16px -6px rgba(var(--green-btn),.6)}
+  .btn-primary:hover{background:rgba(var(--green-btn),.9)}
+
+  /* ---------- Panel ---------- */
+  .panel{
+    background:var(--surface);border:1px solid var(--border);border-radius:18px;
+    box-shadow:var(--shadow-2);
+    padding:30px 30px 26px;margin-bottom:34px;position:relative;z-index:2;
+  }
+  .panel-head{max-width:640px}
+  .panel-head h2{margin:0;font-size:clamp(23px,2.5vw,29px);font-weight:700;letter-spacing:-.5px;color:rgb(var(--navy))}
+  .panel-head p{margin:8px 0 0;font-size:15px;color:var(--muted-strong)}
+
+  .grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:26px;
+  }
+
+  /* ---------- Cards ---------- */
+  .card{
+    display:flex;flex-direction:column;
+    background:var(--surface-2);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:20px 18px 18px;
+    position:relative;min-height:100%;
+    transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+    outline:none;
+  }
+  .card:hover{transform:translateY(-3px);box-shadow:var(--shadow-2);border-color:rgba(var(--green),.55)}
+  .card:focus-visible{border-color:rgb(var(--green-btn));box-shadow:0 0 0 3px rgba(var(--green),.35)}
+  .chip{
+    width:52px;height:52px;border-radius:13px;display:flex;align-items:center;justify-content:center;
+    background:rgba(var(--green),.14);color:rgb(var(--green-ink));margin-bottom:15px;
+    transition:background .16s ease;
+  }
+  .chip svg{width:26px;height:26px;stroke-width:1.85}
+  .card.help .chip{background:rgba(var(--yellow),.28);color:#7a5c00}
+  .card:hover .chip{background:rgba(var(--green),.22)}
+  .card.help:hover .chip{background:rgba(var(--yellow),.42)}
+
+  .badge{
+    position:absolute;top:16px;right:16px;
+    background:#e3f2fd;color:#1565c0;border:1px solid #cfe3fb;
+    font-size:11px;font-weight:600;padding:4px 10px;border-radius:999px;line-height:1.4;
+  }
+  .q{font-size:13px;font-weight:600;color:var(--muted);margin:0 0 4px}
+  .card h3{margin:0;font-size:17.5px;font-weight:700;letter-spacing:-.2px;color:rgb(var(--navy));line-height:1.2}
+  .card .desc{margin:8px 0 0;font-size:13.5px;line-height:1.5;color:var(--muted-strong)}
+  .card .tool{
+    margin-top:14px;font-size:11.5px;font-weight:500;color:var(--muted);
+    display:flex;align-items:center;gap:6px;
+  }
+  .card .tool::before{content:"";width:5px;height:5px;border-radius:50%;background:rgba(var(--green),.9)}
+  .card.help .tool::before{background:rgb(var(--yellow))}
+
+  .card .cta{
+    margin-top:16px;align-self:stretch;
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    padding:11px 14px;border-radius:10px;font-size:14px;font-weight:600;line-height:1;
+    border:1.5px solid rgb(var(--green-btn));color:rgb(var(--green-ink));background:transparent;
+    transition:background .15s ease,color .15s ease;
+  }
+  .card .cta svg{width:16px;height:16px;stroke-width:2.1;transition:transform .16s ease}
+  .card:hover .cta{background:rgba(var(--green),.1)}
+  .card:hover .cta svg{transform:translateX(3px)}
+  .card .cta.filled{background:rgb(var(--green-btn));color:#fff;border-color:rgb(var(--green-btn));box-shadow:0 6px 16px -7px rgba(var(--green-btn),.7)}
+  .card:hover .cta.filled{background:rgba(var(--green-btn),.9)}
+
+  .panel-foot{
+    text-align:center;margin:22px 0 2px;font-size:13.5px;color:var(--muted);
+    border-top:1px solid var(--border);padding-top:18px;
+  }
+
+  /* ---------- Recruitment-help modal ---------- */
+  .chip-round{border-radius:50%}
+  .modal-scrim{
+    position:fixed;inset:0;background:rgba(var(--navy),.55);
+    display:none;align-items:center;justify-content:center;z-index:70;padding:20px;
+    opacity:0;transition:opacity .2s ease;
+  }
+  .modal-scrim.open{display:flex}
+  .modal-scrim.open.shown{opacity:1}
+  .modal{
+    background:#fff;border-radius:18px;width:100%;max-width:462px;
+    padding:26px 26px 24px;position:relative;box-shadow:0 34px 80px -24px rgba(var(--navy),.55);
+    max-height:calc(100vh - 40px);overflow-y:auto;
+    transform:translateY(12px) scale(.985);transition:transform .22s cubic-bezier(.22,.61,.36,1);
+  }
+  .modal-scrim.open.shown .modal{transform:none}
+  .modal-close{
+    position:absolute;top:15px;right:15px;width:34px;height:34px;border-radius:9px;
+    border:none;background:none;color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;
+    transition:background .15s ease,color .15s ease;
+  }
+  .modal-close:hover{background:#f1f3ef;color:rgb(var(--navy))}
+  .modal-close svg{width:20px;height:20px;stroke-width:2}
+  .modal-close:focus-visible{outline:2px solid rgb(var(--green-btn));outline-offset:2px}
+  .modal-head{display:flex;gap:15px;align-items:flex-start;padding-right:26px}
+  .modal-head .chip{margin-bottom:0;flex:0 0 56px;width:56px;height:56px}
+  .modal-head h2{margin:2px 0 0;font-size:21px;font-weight:700;line-height:1.2;letter-spacing:-.3px;color:rgb(var(--navy))}
+  .modal-head .sub{margin:9px 0 0;font-size:14px;line-height:1.5;color:var(--muted-strong)}
+  .howto{
+    display:flex;gap:12px;background:rgba(var(--green),.1);border:1px solid rgba(var(--green),.18);
+    border-radius:12px;padding:14px 15px;margin:18px 0 4px;
+  }
+  .howto svg{width:22px;height:22px;color:rgb(var(--green-ink));flex:0 0 22px;stroke-width:1.9;margin-top:1px}
+  .howto h3{margin:0;font-size:14px;font-weight:700;color:rgb(var(--navy))}
+  .howto p{margin:5px 0 0;font-size:13px;line-height:1.5;color:var(--muted-strong)}
+  .field{margin-top:16px}
+  .field label{display:block;font-size:14px;font-weight:700;color:rgb(var(--navy));margin-bottom:7px}
+  .field input{
+    width:100%;padding:13px 14px;border:1px solid var(--border);border-radius:10px;
+    font-family:inherit;font-size:14.5px;color:rgb(var(--navy));background:#fff;
+    transition:border-color .15s ease,box-shadow .15s ease;
+  }
+  .field input::placeholder{color:#aeb5bd}
+  .field input:focus{outline:none;border-color:rgb(var(--green-btn));box-shadow:0 0 0 3px rgba(var(--green),.2)}
+  .field input.err{border-color:#d32f2f;box-shadow:0 0 0 3px rgba(211,47,47,.14)}
+  .modal .calc{margin-top:22px;width:100%;justify-content:center;font-size:15px;padding:14px}
+  .hide{display:none !important}
+  .calc svg{width:18px;height:18px;flex:0 0 18px}
+  .fee{
+    display:flex;align-items:center;gap:13px;
+    background:rgba(var(--green),.1);border:1px solid rgba(var(--green),.18);
+    border-radius:12px;padding:15px 16px;margin-top:20px;
+  }
+  .fee-ico{width:30px;height:30px;color:rgb(var(--green-ink));flex:0 0 30px;stroke-width:1.7}
+  .fee-txt{flex:1;min-width:0}
+  .fee-txt h3{margin:0;font-size:14px;font-weight:700;color:rgb(var(--navy))}
+  .fee-txt p{margin:3px 0 0;font-size:12.5px;line-height:1.4;color:var(--muted-strong)}
+  .fee-amt{font-size:24px;font-weight:700;letter-spacing:-.5px;color:rgb(var(--green-ink));white-space:nowrap}
+  .secure{display:flex;align-items:center;justify-content:center;gap:7px;margin:14px 0 0;font-size:12px;color:var(--muted);text-align:center}
+  .secure svg{width:14px;height:14px;flex:0 0 14px;stroke-width:2}
+  .modal.cap{max-width:432px;text-align:center;padding:30px 28px 28px}
+  .cap-art{display:flex;justify-content:center;margin-top:4px}
+  .cap-art svg{width:132px;height:auto}
+  .modal.cap h2{margin:16px 0 0;font-size:23px;font-weight:700;letter-spacing:-.4px;color:rgb(var(--navy))}
+  .cap-body{margin:12px auto 0;max-width:340px;font-size:14px;line-height:1.55;color:var(--muted-strong)}
+  .modal.cap .btn{margin:24px auto 0;min-width:150px;justify-content:center;padding:12px 26px}
+  @media (prefers-reduced-motion: reduce){
+    .modal-scrim,.modal{transition:none}
+  }
+
+  /* ---------- Entrance (single orchestrated moment) ---------- */
+  @media (prefers-reduced-motion: no-preference){
+    .card{opacity:0;transform:translateY(14px)}
+    .reveal .card{animation:rise .5s cubic-bezier(.22,.61,.36,1) forwards}
+    .reveal .card:nth-child(1){animation-delay:.05s}
+    .reveal .card:nth-child(2){animation-delay:.12s}
+    .reveal .card:nth-child(3){animation-delay:.19s}
+    .reveal .card:nth-child(4){animation-delay:.26s}
+    @keyframes rise{to{opacity:1;transform:translateY(0)}}
+  }
+
+  /* ---------- Mobile top bar (hidden on desktop) ---------- */
+  .topbar{display:none}
+  .scrim{display:none}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:1100px){
+    .grid{grid-template-columns:repeat(2,1fr)}
+  }
+  @media (max-width:991px){
+    .sidebar{
+      position:fixed;left:0;top:0;transform:translateX(-100%);
+      transition:transform .28s cubic-bezier(.22,.61,.36,1);box-shadow:0 0 40px rgba(0,0,0,.35);
+    }
+    body.nav-open .sidebar{transform:translateX(0)}
+    body.nav-open .scrim{display:block;position:fixed;inset:0;background:rgba(10,33,57,.5);z-index:35}
+    .topbar{
+      display:flex;align-items:center;gap:12px;
+      background:rgb(var(--navy-deep));color:#fff;padding:12px 16px;position:sticky;top:0;z-index:30;
+    }
+    .topbar .mark{width:36px;height:36px;border-radius:50%;background:#fff;color:rgb(var(--green-ink));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px}
+    .topbar .name{font-weight:700;font-size:16px}
+    .hamb{background:rgba(255,255,255,.1);border:none;color:#fff;width:40px;height:40px;border-radius:9px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+    .hamb svg{width:22px;height:22px}
+    .band{height:130px}
+    .greet-row{margin-top:-92px}
+  }
+  @media (max-width:640px){
+    .wrap{padding:0 16px}
+    .panel{padding:22px 16px 18px;border-radius:16px}
+    .greet h1{font-size:25px}
+    .head-actions{width:100%;flex-wrap:wrap}
+    .credits{order:3}
+    .grid{grid-template-columns:1fr;gap:13px}
+    .greet-row{margin-top:-86px}
+  }
+</style>
+</head>
+<body>
+
+<div class="scrim" id="scrim"></div>
+
+<div class="app">
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand"><div class="mark"><span>JJ</span></div></div>
+    <nav class="nav" aria-label="Main">
+      <a class="nav-item active" href="#" aria-current="page">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20h14V9.5"/><path d="M9.5 20v-6h5v6"/></svg>
+        Home
+      </a>
+      <a class="nav-item" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+        Jobs
+        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+      </a>
+      <a class="nav-item" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v3M16 3v3"/></svg>
+        Interview Calendar
+      </a>
+      <a class="nav-item" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2 2 0 0 1 6 4h5v16H6a2 2 0 0 0-2 1.2Z"/><path d="M20 5.5A2 2 0 0 0 18 4h-5v16h5a2 2 0 0 1 2 1.2Z"/></svg>
+        Assessment &amp; Checks Hub
+      </a>
+      <button class="nav-item" id="companyToggle" aria-expanded="true" aria-controls="companySub">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V6l7-3v18"/><path d="M12 21V9l7 3v9"/><path d="M8.5 8h0M8.5 11.5h0M8.5 15h0"/></svg>
+        My Company
+        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+      </button>
+      <div class="subnav" id="companySub">
+        <a href="#">Company Details</a>
+        <a href="#">Users</a>
+      </div>
+      <a class="nav-item" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.4"/><path d="M5.5 20a6.5 6.5 0 0 1 13 0"/></svg>
+        My Profile
+      </a>
+      <a class="nav-item" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H14l4 4v10.5A1.5 1.5 0 0 1 16.5 20h-11A1.5 1.5 0 0 1 4 18.5Z"/><path d="M14 4v4h4"/></svg>
+        Resources
+      </a>
+      <a class="nav-item" href="#" style="color:#ff9d9d">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3"/><path d="M10 17l-5-5 5-5"/><path d="M5 12h11"/></svg>
+        Logout
+      </a>
+    </nav>
+    <div class="legal">Legal <b>v20260911.4</b></div>
+  </aside>
+
+  <!-- Content -->
+  <div class="content">
+    <!-- mobile top bar -->
+    <header class="topbar">
+      <button class="hamb" id="hamb" aria-label="Open menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+      <div class="mark">JJ</div>
+      <div class="name">JOBJACK Lite</div>
+    </header>
+
+    <div class="band"><span class="dot"></span></div>
+
+    <div class="wrap">
+      <div class="greet-row">
+        <div class="greet">
+          <h1>Hello, David</h1>
+          <p>Your fit based hiring tools, all in one place</p>
+        </div>
+        <div class="head-actions">
+          <span class="credits">Credits:<b>240</b></span>
+          <button class="btn btn-ghost-light" data-toast="Buy more credits">Buy more</button>
+        </div>
+      </div>
+
+      <section class="panel" aria-labelledby="panelTitle">
+        <div class="panel-head">
+          <h2 id="panelTitle">Start where you are</h2>
+          <p>Choose the option that best matches your needs.</p>
+        </div>
+
+        <div class="grid" id="grid">
+          <!-- 1: have candidates -->
+          <a class="card" href="#" data-toast="Opening Assessment &amp; Check Hub" aria-label="Have candidates? Assess and check them. Screen a candidate.">
+            <span class="chip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 5 6v5.5c0 4.3 2.9 7.4 7 9 4.1-1.6 7-4.7 7-9V6Z"/><path d="m9 12 2 2 4-4"/></svg>
+            </span>
+            <p class="q">Have candidates?</p>
+            <h3>Administer Assessments &amp; Checks</h3>
+            <p class="desc">Run assessments and checks before making your hiring decision.</p>
+            <span class="tool">Assessment &amp; Check Hub</span>
+            <span class="cta">Screen a candidate
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+            </span>
+          </a>
+
+          <!-- 2: need candidates -->
+          <a class="card" href="#" data-toast="Thanks, we'll notify you when Digital CV Box launches" aria-label="Need candidates? Explore your talent pool. Coming soon. Notify me.">
+            <span class="badge">Coming Soon</span>
+            <span class="chip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10.5" r="2"/><path d="M5.5 16.5c.5-1.7 1.7-2.6 3-2.6s2.5.9 3 2.6"/><path d="M14.5 9.5H19M14.5 12.5H19M14.5 15.5h2.6"/></svg>
+            </span>
+            <p class="q">Need candidates?</p>
+            <h3>Explore your talent pool</h3>
+            <p class="desc">Build and review your own talent pool by collecting and storing digital CVs in one place.</p>
+            <span class="tool">Digital CV Box</span>
+            <span class="cta">Notify me
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 5.2a1.6 1.6 0 0 1 3 0c2 .7 3.3 2.6 3.3 4.8 0 3.6 1.2 4.5 1.2 4.5H6s1.2-.9 1.2-4.5c0-2.2 1.3-4.1 3.3-4.8Z"/><path d="M10 19.5a2 2 0 0 0 4 0"/></svg>
+            </span>
+          </a>
+
+          <!-- 3: need more reach (primary) -->
+          <a class="card" href="#" data-toast="Opening Recruitment to post a job" aria-label="Need more reach? Post a job. Post a job.">
+            <span class="chip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h7l5 5v6"/><path d="M13 3v5h5"/><path d="M8 21h-.5A1.5 1.5 0 0 1 6 19.5V13"/><circle cx="17" cy="18" r="4"/><path d="M17 16.3v3.4M15.3 18h3.4"/></svg>
+            </span>
+            <p class="q">Need more reach?</p>
+            <h3>Post a job</h3>
+            <p class="desc">Reach more candidates by posting a job on JOBJACK when you haven't found the right fit yet</p>
+            <span class="tool">Recruitment</span>
+            <span class="cta filled">Post a job
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+            </span>
+          </a>
+
+          <!-- 4: need expert help -->
+          <a class="card help" href="#" id="helpCard" aria-haspopup="dialog" aria-label="Need expert help? Let JOBJACK help. Get recruitment help.">
+            <span class="chip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="3.2"/><path d="M2.5 19a5.5 5.5 0 0 1 10.4-2.4"/><circle cx="16.5" cy="15" r="3.3"/><path d="m19 17.5 2.5 2.5"/></svg>
+            </span>
+            <p class="q">Need expert help?</p>
+            <h3>Let JOBJACK help</h3>
+            <p class="desc">Get recruitment support for specialised roles or when you're short on time.</p>
+            <span class="tool">Recruitment Support</span>
+            <span class="cta">Get recruitment help
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+            </span>
+          </a>
+        </div>
+
+        <p class="panel-foot">You can start at any stage.</p>
+      </section>
+    </div>
+  </div>
+</div>
+
+<!-- Recruitment help modal -->
+<div class="modal-scrim" id="helpModal" role="dialog" aria-modal="true" aria-labelledby="helpModalTitle">
+  <div class="modal">
+    <button class="modal-close" id="helpClose" aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M6 6 18 18M18 6 6 18"/></svg>
+    </button>
+    <div class="modal-head">
+      <span class="chip chip-round">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="9" r="3.2"/><path d="M2.6 20a5.5 5.5 0 0 1 10.3-2.5"/><circle cx="16.5" cy="15" r="3.3"/><path d="m19 17.5 2.5 2.5"/><path d="M14.3 4.4v-2M17.2 5.8l1.3-1.3M12 6.3l-.5-.5"/></svg>
+      </span>
+      <div>
+        <h2 id="helpModalTitle">Need help finding the right-fit candidate?</h2>
+        <p class="sub">Let JOBJACK's recruitment team help you find and shortlist quality candidates for your role.</p>
+      </div>
+    </div>
+    <div class="howto">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.2 1 2.5h6c0-1.3.3-1.8 1-2.5A6 6 0 0 0 12 3Z"/></svg>
+      <div>
+        <h3>How it works</h3>
+        <p>Our recruiters will contact you, understand what you need, and help source candidates for your role.</p>
+      </div>
+    </div>
+    <div class="field">
+      <label for="roleInput">What role are you hiring for?</label>
+      <input id="roleInput" type="text" placeholder="e.g. Store Manager, Sales Assistant, Driver">
+    </div>
+    <div class="field">
+      <label for="salaryInput">What's the annual salary for this role?</label>
+      <input id="salaryInput" type="text" inputmode="numeric" placeholder="e.g. R180 000">
+    </div>
+    <div class="fee hide" id="feeBlock">
+      <svg class="fee-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="9" cy="6.5" rx="6" ry="2.4"/><path d="M3 6.5v3.5c0 1.3 2.7 2.4 6 2.4s6-1.1 6-2.4V6.5"/><path d="M3 10v3.5c0 1.3 2.7 2.4 6 2.4"/><ellipse cx="15" cy="15" rx="6" ry="2.4"/><path d="M9 15.2v3.3c0 1.3 2.7 2.4 6 2.4s6-1.1 6-2.4V15"/></svg>
+      <div class="fee-txt">
+        <h3>Recruitment fee</h3>
+        <p>A once-off fee for our recruitment service.</p>
+      </div>
+      <div class="fee-amt">R7 000</div>
+    </div>
+    <button class="btn btn-primary calc" id="calcBtn">Calculate cost</button>
+    <button class="btn btn-primary calc hide" id="requestBtn">Request recruitment help
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+    </button>
+    <p class="secure hide" id="secureFoot">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+      Your details are secure and will only be used for this request.
+    </p>
+  </div>
+</div>
+
+<!-- Capacity modal -->
+<div class="modal-scrim" id="capModal" role="dialog" aria-modal="true" aria-labelledby="capTitle">
+  <div class="modal cap">
+    <button class="modal-close" id="capClose" aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M6 6 18 18M18 6 6 18"/></svg>
+    </button>
+    <div class="cap-art">
+      <svg viewBox="0 0 150 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g stroke="#59b367" stroke-width="2.6" stroke-linecap="round"><path d="M60 14l-4-6"/><path d="M75 9v-7"/><path d="M90 14l4-6"/></g>
+        <path d="M18 100c0-15 8-24 20-24s20 9 20 24Z" fill="#f4b942"/>
+        <circle cx="38" cy="52" r="15" fill="#efb488"/>
+        <path d="M23 51a15 15 0 0 1 30 0c0-3-2-14-15-14S23 48 23 51Z" fill="#3f2d20"/>
+        <circle cx="33" cy="53" r="1.7" fill="#2f2117"/><circle cx="43" cy="53" r="1.7" fill="#2f2117"/>
+        <path d="M34 58q4 3 8 0" stroke="#2f2117" stroke-width="1.7" stroke-linecap="round" fill="none"/>
+        <path d="M92 100c0-15 8-24 20-24s20 9 20 24Z" fill="#b9a5e0"/>
+        <circle cx="112" cy="52" r="15" fill="#c98a5e"/>
+        <path d="M97 52a15 15 0 0 1 30 0c0-4-3-15-15-15S97 47 97 52Z" fill="#2b1d14"/>
+        <circle cx="107" cy="54" r="1.7" fill="#241812"/><circle cx="117" cy="54" r="1.7" fill="#241812"/>
+        <path d="M108 59q4 3 8 0" stroke="#241812" stroke-width="1.7" stroke-linecap="round" fill="none"/>
+        <path d="M50 100c0-17 10-27 25-27s25 10 25 27Z" fill="#57b268"/>
+        <circle cx="75" cy="44" r="17" fill="#8d5a3c"/>
+        <path d="M58 44a17 17 0 0 1 34 0c0-5-1-18-17-18S58 39 58 44Z" fill="#241812"/>
+        <circle cx="69" cy="46" r="1.9" fill="#12100e"/><circle cx="81" cy="46" r="1.9" fill="#12100e"/>
+        <path d="M69 51q6 4 12 0" stroke="#12100e" stroke-width="1.9" stroke-linecap="round" fill="none"/>
+      </svg>
+    </div>
+    <h2 id="capTitle">Our team is at capacity</h2>
+    <p class="cap-body">Thanks for your interest! The JOBJACK team isn't taking on new customers for active recruiting right now. Our team will reach out as soon as capacity becomes available.</p>
+    <button class="btn btn-primary" id="gotItBtn">Got it</button>
+  </div>
+</div>
+
+<script>
+  // Mobile drawer
+  var body = document.body;
+  function openNav(){ body.classList.add('nav-open'); }
+  function closeNav(){ body.classList.remove('nav-open'); }
+  document.getElementById('hamb').addEventListener('click', openNav);
+  document.getElementById('scrim').addEventListener('click', closeNav);
+
+  // My Company submenu
+  var ct = document.getElementById('companyToggle');
+  var sub = document.getElementById('companySub');
+  ct.addEventListener('click', function(){
+    var open = ct.getAttribute('aria-expanded') === 'true';
+    ct.setAttribute('aria-expanded', String(!open));
+    sub.style.display = open ? 'none' : 'flex';
+  });
+
+  // Toasts on click (prototype feedback; keeps action names consistent through the flow)
+  var toastTimer;
+  function toast(msg){
+    var t = document.getElementById('toast');
+    if(!t){
+      t = document.createElement('div');
+      t.id = 'toast';
+      t.style.cssText = 'position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(16px);'
+        + 'background:#0a2139;color:#fff;padding:12px 18px;border-radius:11px;font:600 14px/1 "Roboto",sans-serif;'
+        + 'box-shadow:0 12px 30px -8px rgba(0,0,0,.5);z-index:60;opacity:0;transition:opacity .2s,transform .2s;'
+        + 'display:flex;align-items:center;gap:9px;max-width:calc(100% - 32px)';
+      document.body.appendChild(t);
+    }
+    t.innerHTML = '<span style="width:8px;height:8px;border-radius:50%;background:#59b367;flex:0 0 8px"></span>' + msg;
+    requestAnimationFrame(function(){ t.style.opacity='1'; t.style.transform='translateX(-50%) translateY(0)'; });
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ t.style.opacity='0'; t.style.transform='translateX(-50%) translateY(16px)'; }, 2200);
+  }
+  document.querySelectorAll('[data-toast]').forEach(function(el){
+    el.addEventListener('click', function(e){
+      if(el.tagName === 'A') e.preventDefault();
+      toast(el.getAttribute('data-toast'));
+    });
+  });
+
+  // ----- Modals: recruitment help + capacity -----
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var helpModal = document.getElementById('helpModal');
+  var capModal  = document.getElementById('capModal');
+  var helpCard  = document.getElementById('helpCard');
+  var returnFocus = null;
+
+  function focusables(scrim){
+    return Array.prototype.slice.call(
+      scrim.querySelectorAll('button, [href], input, [tabindex]:not([tabindex="-1"])')
+    ).filter(function(el){ return el.offsetParent !== null && !el.disabled; });
+  }
+  function anyOpen(){ return helpModal.classList.contains('open') || capModal.classList.contains('open'); }
+  function showModal(scrim, focusEl){
+    scrim.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    var reveal = function(){ scrim.classList.add('shown'); };
+    reduce ? reveal() : requestAnimationFrame(reveal);
+    setTimeout(function(){ (focusEl || focusables(scrim)[0] || scrim).focus(); }, reduce ? 0 : 120);
+  }
+  function hideModal(scrim){
+    scrim.classList.remove('shown');
+    var done = function(){ scrim.classList.remove('open'); if(!anyOpen()) document.body.style.overflow=''; };
+    reduce ? done() : setTimeout(done, 200);
+  }
+
+  var roleIn     = document.getElementById('roleInput');
+  var salaryIn   = document.getElementById('salaryInput');
+  var feeBlock   = document.getElementById('feeBlock');
+  var calcBtn    = document.getElementById('calcBtn');
+  var requestBtn = document.getElementById('requestBtn');
+  var secureFoot = document.getElementById('secureFoot');
+
+  function resetHelp(){
+    feeBlock.classList.add('hide');
+    secureFoot.classList.add('hide');
+    requestBtn.classList.add('hide');
+    calcBtn.classList.remove('hide');
+    roleIn.classList.remove('err');
+    salaryIn.classList.remove('err');
+  }
+
+  // Open help from the tile
+  helpCard.addEventListener('click', function(e){ e.preventDefault(); returnFocus = helpCard; resetHelp(); showModal(helpModal, roleIn); });
+  document.getElementById('helpClose').addEventListener('click', function(){ hideModal(helpModal); if(returnFocus) returnFocus.focus(); });
+  helpModal.addEventListener('click', function(e){ if(e.target===helpModal){ hideModal(helpModal); if(returnFocus) returnFocus.focus(); } });
+
+  // Calculate cost -> reveal fee + request button
+  [roleIn, salaryIn].forEach(function(i){ i.addEventListener('input', function(){ i.classList.remove('err'); }); });
+  calcBtn.addEventListener('click', function(){
+    var bad = false;
+    [roleIn, salaryIn].forEach(function(i){ if(!i.value.trim()){ i.classList.add('err'); bad = true; } });
+    if(bad){ (roleIn.value.trim() ? salaryIn : roleIn).focus(); return; }
+    feeBlock.classList.remove('hide');
+    calcBtn.classList.add('hide');
+    requestBtn.classList.remove('hide');
+    secureFoot.classList.remove('hide');
+    requestBtn.focus();
+  });
+
+  // Request help -> capacity modal
+  requestBtn.addEventListener('click', function(){
+    hideModal(helpModal);
+    showModal(capModal, document.getElementById('gotItBtn'));
+  });
+  function closeCap(){ hideModal(capModal); if(returnFocus) returnFocus.focus(); }
+  document.getElementById('capClose').addEventListener('click', closeCap);
+  document.getElementById('gotItBtn').addEventListener('click', closeCap);
+  capModal.addEventListener('click', function(e){ if(e.target===capModal) closeCap(); });
+
+  // Keyboard: Esc + Tab trap on whichever modal is open
+  document.addEventListener('keydown', function(e){
+    var scrim = capModal.classList.contains('open') ? capModal
+              : (helpModal.classList.contains('open') ? helpModal : null);
+    if(!scrim) return;
+    if(e.key==='Escape'){
+      if(scrim===capModal){ closeCap(); }
+      else { hideModal(helpModal); if(returnFocus) returnFocus.focus(); }
+    }
+    if(e.key==='Tab'){
+      var f = focusables(scrim); if(!f.length) return;
+      var first=f[0], last=f[f.length-1];
+      if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus(); }
+      else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
+    }
+  });
+
+  // Single orchestrated entrance
+  requestAnimationFrame(function(){ document.getElementById('grid').classList.add('reveal'); });
+</script>
+</body>
+</html>
