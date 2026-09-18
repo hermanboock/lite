@@ -104,7 +104,7 @@
     position:relative;
   }
   .band .dot{position:absolute;width:22px;height:22px;border-radius:50%;background:rgb(var(--yellow));top:34px;right:16%;box-shadow:0 0 0 8px rgba(var(--yellow),.16)}
-  .wrap{width:100%;max-width:1180px;margin:0 auto;padding:0 30px}
+  .wrap{width:100%;max-width:1640px;margin:0 auto;padding:0 34px}
   .greet-row{
     margin-top:-104px;position:relative;z-index:2;
     display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap;
@@ -174,16 +174,13 @@
   }
   .q{font-size:13px;font-weight:600;color:var(--muted);margin:0 0 4px}
   .card h3{margin:0;font-size:17.5px;font-weight:700;letter-spacing:-.2px;color:rgb(var(--navy));line-height:1.2}
-  .card .desc{margin:8px 0 0;font-size:13.5px;line-height:1.5;color:var(--muted-strong)}
-  .card .tool{
-    margin-top:14px;font-size:11.5px;font-weight:500;color:var(--muted);
-    display:flex;align-items:center;gap:6px;
-  }
-  .card .tool::before{content:"";width:5px;height:5px;border-radius:50%;background:rgba(var(--green),.9)}
-  .card.help .tool::before{background:rgb(var(--yellow))}
+  .card .qa{margin-top:14px}
+  .card .qa:last-of-type{margin-bottom:20px}
+  .card .qa-h{margin:0 0 3px;font-size:13.5px;font-weight:700;color:rgb(var(--navy))}
+  .card .qa-b{margin:0;font-size:13.5px;line-height:1.45;color:var(--muted-strong)}
 
   .card .cta{
-    margin-top:16px;align-self:stretch;
+    margin-top:auto;align-self:stretch;
     display:inline-flex;align-items:center;justify-content:center;gap:8px;
     padding:11px 14px;border-radius:10px;font-size:14px;font-weight:600;line-height:1;
     border:1.5px solid rgb(var(--green-btn));color:rgb(var(--green-ink));background:transparent;
@@ -447,7 +444,7 @@
       <div class="greet-row">
         <div class="greet">
           <h1>Hello, David</h1>
-          <p>Your fit based hiring tools, all in one place</p>
+          <p>Your <strong>FIT-based</strong> hiring tools, all in one place.</p>
         </div>
         <div class="head-actions">
           <span class="credits">Credits:<b>240</b></span>
@@ -458,62 +455,82 @@
       <section class="panel" aria-labelledby="panelTitle">
         <div class="panel-head">
           <h2 id="panelTitle">Start where you are</h2>
-          <p>Choose the option that best matches your needs.</p>
+          <p>Choose the option that best matches where you are in your hiring journey.</p>
         </div>
 
         <div class="grid" id="grid">
           <!-- 1: have candidates -->
-          <a class="card" href="#" data-toast="Opening Assessment &amp; Check Hub" aria-label="Have candidates? Assess and check them. Screen a candidate.">
+          <a class="card" href="#" data-toast="Opening Assessment &amp; Check Hub" aria-label="Have candidates? Choose the right candidate. Screen candidates.">
             <span class="chip">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 5 6v5.5c0 4.3 2.9 7.4 7 9 4.1-1.6 7-4.7 7-9V6Z"/><path d="m9 12 2 2 4-4"/></svg>
             </span>
-            <p class="q">Have candidates?</p>
-            <h3>Administer Assessments &amp; Checks</h3>
-            <p class="desc">Run assessments and checks before making your hiring decision.</p>
-            <span class="tool">Assessment &amp; Check Hub</span>
-            <span class="cta">Screen a candidate
+            <h3>Choose the right candidate</h3>
+            <div class="qa">
+              <p class="qa-h">Who's it for?</p>
+              <p class="qa-b">You already have candidates, but don't know who to choose.</p>
+            </div>
+            <div class="qa">
+              <p class="qa-h">What is it?</p>
+              <p class="qa-b">Run criminal, ID, qualification and credit checks. Administer lit, numeracy, problem-solving and psychometric assessments.</p>
+            </div>
+            <span class="cta">Screen candidates
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
             </span>
           </a>
 
           <!-- 2: need candidates -->
-          <a class="card" href="#" data-toast="Thanks, we'll notify you when Digital CV Box launches" aria-label="Need candidates? Explore your talent pool. Coming soon. Notify me.">
+          <a class="card" href="#" data-toast="Thanks, we'll notify you when Digital CV Box launches" aria-label="Want to save CVs for later? Build your talent pool. Coming soon. Notify me.">
             <span class="badge">Coming Soon</span>
             <span class="chip">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10.5" r="2"/><path d="M5.5 16.5c.5-1.7 1.7-2.6 3-2.6s2.5.9 3 2.6"/><path d="M14.5 9.5H19M14.5 12.5H19M14.5 15.5h2.6"/></svg>
             </span>
-            <p class="q">Need candidates?</p>
-            <h3>Explore your talent pool</h3>
-            <p class="desc">Build and review your own talent pool by collecting and storing digital CVs in one place.</p>
-            <span class="tool">Digital CV Box</span>
+            <h3>Build your talent pool</h3>
+            <div class="qa">
+              <p class="qa-h">Who's it for?</p>
+              <p class="qa-b">You receive CVs and want to keep them for future hiring.</p>
+            </div>
+            <div class="qa">
+              <p class="qa-h">What is it?</p>
+              <p class="qa-b">Collect and store CVs digitally, with candidate consent, documents and details in one place.</p>
+            </div>
             <span class="cta">Notify me
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 5.2a1.6 1.6 0 0 1 3 0c2 .7 3.3 2.6 3.3 4.8 0 3.6 1.2 4.5 1.2 4.5H6s1.2-.9 1.2-4.5c0-2.2 1.3-4.1 3.3-4.8Z"/><path d="M10 19.5a2 2 0 0 0 4 0"/></svg>
             </span>
           </a>
 
           <!-- 3: need more reach (primary) -->
-          <a class="card" href="#" data-toast="Opening Recruitment to post a job" aria-label="Need more reach? Post a job. Post a job.">
+          <a class="card" href="#" data-toast="Opening Recruitment to post a job" aria-label="Need candidates now? Post a job.">
             <span class="chip">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h7l5 5v6"/><path d="M13 3v5h5"/><path d="M8 21h-.5A1.5 1.5 0 0 1 6 19.5V13"/><circle cx="17" cy="18" r="4"/><path d="M17 16.3v3.4M15.3 18h3.4"/></svg>
             </span>
-            <p class="q">Need more reach?</p>
             <h3>Post a job</h3>
-            <p class="desc">Reach more candidates by posting a job on JOBJACK when you haven't found the right fit yet</p>
-            <span class="tool">Recruitment</span>
+            <div class="qa">
+              <p class="qa-h">Who's it for?</p>
+              <p class="qa-b">You need candidates to apply to your job.</p>
+            </div>
+            <div class="qa">
+              <p class="qa-h">What is it?</p>
+              <p class="qa-b">Post your job. Candidates are assessed and ranked so you can focus on the strongest applicants first.</p>
+            </div>
             <span class="cta filled">Post a job
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
             </span>
           </a>
 
           <!-- 4: need expert help -->
-          <a class="card help" href="#" id="helpCard" aria-haspopup="dialog" aria-label="Need expert help? Let JOBJACK help. Get recruitment help.">
+          <a class="card help" href="#" id="helpCard" aria-haspopup="dialog" aria-label="Need someone to handle it? Let JOBJACK recruit for you. Get recruitment help.">
             <span class="chip">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="3.2"/><path d="M2.5 19a5.5 5.5 0 0 1 10.4-2.4"/><circle cx="16.5" cy="15" r="3.3"/><path d="m19 17.5 2.5 2.5"/></svg>
             </span>
-            <p class="q">Need expert help?</p>
-            <h3>Let JOBJACK help</h3>
-            <p class="desc">Get recruitment support for specialised roles or when you're short on time.</p>
-            <span class="tool">Recruitment Support</span>
+            <h3>Let JOBJACK recruit for you</h3>
+            <div class="qa">
+              <p class="qa-h">Who's it for?</p>
+              <p class="qa-b">You need to hire, but don't have the time.</p>
+            </div>
+            <div class="qa">
+              <p class="qa-h">What is it?</p>
+              <p class="qa-b">A JOBJACK recruiter manages the recruitment process for you.</p>
+            </div>
             <span class="cta">Get recruitment help
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
             </span>
